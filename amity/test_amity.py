@@ -2,6 +2,7 @@ from building import Amity, Office, Room, LivingSpace
 from people import Person, Fellow, Staff
 from alloc import generate_rooms
 from random import randint
+from tools import PeopleFileParser
 
 import unittest
 
@@ -38,19 +39,21 @@ class AllocTestCase(unittest.TestCase):
     def test_can_generate_offices(self):
         rooms = generate_rooms('office')
         self.assertEquals(10, len(rooms))
-        self.assertIsInstance(rooms[randint(1, 10)], Office)
+        self.assertIsInstance(rooms[randint(0, 9)], Office)
 
     def test_can_generate_living_spaces(self):
         rooms = generate_rooms('living space')
         self.assertEquals(10, len(rooms))
-        self.assertIsInstance(rooms[randint(1, 10)], LivingSpace)
+        self.assertIsInstance(rooms[randint(0, 9)], LivingSpace)
 
 
 class PeopleFileParserTestCase(unittest.TestCase):
 
     def test_can_parse_people_from_file(self):
-        persons = PeopleFileParser.line_to_person('data_samples/people.txt')
-        self.assertEquals(persons, 5)
+        file_path = 'amity/data_samples/people.txt'
+        persons = PeopleFileParser.line_to_person(file_path)
+        self.assertEquals(len(persons), 5)
+        self.assertIsInstance(persons[randint(0, 4)], Person)
 
 
 if __name__ == '__main__':
