@@ -1,7 +1,7 @@
 def flatten(args):
     """This function flattens a nested list.
     """
-    if isinstance(args, list):
+    if isinstance(args, (list, tuple)):
         return [item for arg in args for item in flatten(arg)]
     else:
         return [args]
