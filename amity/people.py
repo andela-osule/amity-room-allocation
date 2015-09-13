@@ -3,8 +3,8 @@ import abc
 
 class Person(object):
     """This represents a person.
-    "   Must be instantiated with <full name> and <sex>
-    "   Example: p = Person('Jack Frost', 'M')
+       It must be instantiated with <full name> and <sex>
+       Example: p = Person('Jack Frost', 'M')
     """
     name = ''
     sex = ''
@@ -14,8 +14,8 @@ class Person(object):
         Person.sex = sex
 
     def make_person(self, role, has_expr_interest=False):
-        """Create an instance of either Fellow or Staff object.
-        "  <role> argument must be passed in.
+        """This creates an instance of either Fellow or Staff object.
+           The <role> argument must be passed in.
         """
         self.__class__ = Role.title[role.lower()]
         self.name = Person.name
@@ -61,6 +61,6 @@ class Manager(Staff):
 
 
 class Role:
-    """This manages titles that person can take on
+    """This manages the title that a person can take on
     """
     title = {'fellow': Fellow, 'staff': Staff, 'manager': Manager}

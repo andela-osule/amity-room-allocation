@@ -18,14 +18,18 @@ def get_parent(arg):
 
 
 class PeopleFileParser:
+    """This represents a class of methods for parsing text.
+    """
 
     @staticmethod
     def parse_persons(datafile='amity/data_samples/people.txt',
                       add=True,
                       output=None):
         """Parses person from a file.
-        "  Call with datafile path.
-        "  Optional arguments are <add> and <output>
+
+           Call with datafile path.
+
+           Optional arguments are <add> and <output>
         """
         persons = []
         with open(datafile, 'r') as people_file:
@@ -44,3 +48,7 @@ class PeopleFileParser:
     @staticmethod
     def line_to_person(datafile):
         return PeopleFileParser.parse_persons(datafile)
+
+
+class AllocationWriter:
+    pass

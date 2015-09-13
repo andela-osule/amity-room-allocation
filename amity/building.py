@@ -3,7 +3,7 @@ import tools
 
 class Room(object):
     """Factory for creating rooms.
-    "  Instantiate with <name> and <room type>
+       Instantiate with <name> and <room type>
     """
     def __init__(self, name, room_type):
         self.__class__ = Amity.room_types.get(room_type)
@@ -18,8 +18,8 @@ class Room(object):
 
 class Office(Room):
     """This represents an office.
-    "  Should not be instantiated directly.
-    "  Use Room factory.
+       This class should never be instantiated directly.
+       Always use Room factory.
     """
     capacity = 6
 
@@ -32,8 +32,8 @@ class Office(Room):
 
 class LivingSpace(Room):
     """This represents a living space.
-    "  Should not be instantiated directly.
-    "  Use Room factory.
+       This class should never be instantiated directly.
+       Always use Room factory.
     """
     capacity = 4
 
@@ -46,10 +46,10 @@ class LivingSpace(Room):
 
 class Amity:
     """This represents the company building.
-    "  Rooms can be added to company building.
+       Rooms can be added to company building.
     """
     people_collection = []
-    rooms = []
+    room_collection = []
     room_types = {'office': Office,
                   'living space': LivingSpace}
     room_count = 0
@@ -59,7 +59,7 @@ class Amity:
         """Add room object to the building.
         """
         if tools.get_parent(room) is Room:
-            Amity.rooms.append(room)
+            Amity.room_collection.append(room)
         Amity.update_room_count()
 
     @staticmethod
@@ -72,7 +72,7 @@ class Amity:
 
     @staticmethod
     def update_room_count():
-        Amity.room_count = len(Amity.rooms)
+        Amity.room_count = len(Amity.room_collection)
 
     @staticmethod
     def remove_room(room_name):
@@ -80,7 +80,7 @@ class Amity:
         """
         room_index = Amity.find_room(room_name)
         try:
-            del Amity.rooms[room_index]
+            del Amity.room_collection[room_index]
         except IndexError:
             print "Room {0} does not exist".format(room_name)
         Amity.update_room_count()
@@ -88,7 +88,7 @@ class Amity:
     @staticmethod
     def remove_rooms(*room_names):
         """Removes multiple rooms from the buiding.
-        " Arguments can be a list of rooms or comma-separated
+           Arguments can be a list of rooms or comma-separated values
         """
         room_name_list = tools.flatten(list(room_names))
         for room_name in room_name_list:
@@ -96,7 +96,7 @@ class Amity:
 
     @staticmethod
     def find_room(room_name):
-        for index, room in enumerate(Amity.rooms):
+        for index, room in enumerate(Amity.room_collection):
             if room.name in room_name:
                 return index
 
