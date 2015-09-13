@@ -26,11 +26,15 @@ class Fellow(Person):
     def can_have_living_space(self):
         return True
 
+    def __repr__(self):
+        return "Fellow: {0}".format(self.name)
+
 
 class Staff(Person):
     """This represents a person who is a staff.
     """
-    pass
+    def __repr__(self):
+        return "Staff: {0}".format(self.name)
 
 
 class Manager(Staff):

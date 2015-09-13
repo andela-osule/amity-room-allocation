@@ -26,6 +26,9 @@ class Office(Room):
     def __init__(self, name):
         self.set_name(name)
 
+    def __repr__(self):
+        return "Office: {0}".format(self.name)
+
 
 class LivingSpace(Room):
     """This represents a living space.
@@ -36,6 +39,9 @@ class LivingSpace(Room):
 
     def __init__(self, name):
         self.set_name(name)
+
+    def __repr__(self):
+        return "Living Space: {0}".format(self.name)
 
 
 class Amity:
