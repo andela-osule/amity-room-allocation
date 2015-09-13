@@ -13,7 +13,7 @@ class Person(object):
         Person.name = name
         Person.sex = sex
 
-    def make_person(self, role, has_exp_interest=False):
+    def make_person(self, role, has_expr_interest=False):
         """Create an instance of either Fellow or Staff object.
         "  <role> argument must be passed in.
         """
@@ -21,7 +21,7 @@ class Person(object):
         self.name = Person.name
         self.sex = Person.sex
         if self.__class__ is Fellow:
-            self.has_expressed_interest = has_exp_interest
+            self.has_expressed_interest = has_expr_interest
         return self
 
 
