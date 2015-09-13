@@ -1,5 +1,8 @@
 from building import Amity, Office, Room, LivingSpace
 from people import Person, Fellow, Staff
+from alloc import generate_rooms
+from random import randint
+
 import unittest
 
 
@@ -29,6 +32,18 @@ class AmityTestCase(unittest.TestCase):
         self.assertIsInstance(self.f, Fellow)
         self.assertIsInstance(self.s, Staff)
 
+
+class AllocTestCase(unittest.TestCase):
+
+    def test_can_generate_offices(self):
+        rooms = generate_rooms('office')
+        self.assertEquals(10, len(rooms))
+        self.assertIsInstance(rooms[randint(1, 10)], Office)
+
+    def test_can_generate_living_spaces(self):
+        rooms = generate_rooms('living space')
+        self.assertEquals(10, len(rooms))
+        self.assertIsInstance(rooms[randint(1, 10)], LivingSpace)
 
 if __name__ == '__main__':
     unittest.main()
