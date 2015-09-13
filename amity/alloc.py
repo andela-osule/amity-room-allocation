@@ -7,7 +7,8 @@ def generate_rooms(room_type, n=10):
     "  To be called with <room_type> and <n:number_of_rooms>
     "  Returns list of room objects
     """
-    rooms = [Room("{0}A".format(i), room_type) for i in xrange(n)]
+    start = Amity.room_count + 1
+    rooms = [Room("Room {0}".format(i), room_type) for i in xrange(start, n+1)]
     return rooms
 
 
