@@ -46,6 +46,7 @@ class Amity:
     rooms = []
     room_types = {'office': Office,
                   'living space': LivingSpace}
+    room_count = 0
 
     @staticmethod
     def add_room(room):
