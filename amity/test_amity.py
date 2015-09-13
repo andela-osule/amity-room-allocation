@@ -45,5 +45,13 @@ class AllocTestCase(unittest.TestCase):
         self.assertEquals(10, len(rooms))
         self.assertIsInstance(rooms[randint(1, 10)], LivingSpace)
 
+
+class PeopleFileParserTestCase(unittest.TestCase):
+
+    def test_can_parse_people_from_file(self):
+        persons = PeopleFileParser.line_to_person('data_samples/people.txt')
+        self.assertEquals(persons, 5)
+
+
 if __name__ == '__main__':
     unittest.main()
