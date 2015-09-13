@@ -2,9 +2,10 @@ from building import Amity, Office, Room, LivingSpace
 from people import Person, Fellow, Staff
 from alloc import generate_rooms
 from random import randint
-from tools import PeopleFileParser
+from tools import PeopleFileParser, AllocationWriter
 
 import unittest
+import sys
 
 
 class AmityTestCase(unittest.TestCase):
@@ -56,5 +57,15 @@ class PeopleFileParserTestCase(unittest.TestCase):
         self.assertIsInstance(persons[randint(0, 4)], Person)
 
 
+class AllocationWriterTestCase(unittest.TestCase):
+
+    def test_can_write_allocation(self):
+        AllocationWriter.write_allocation()
+        if not hasattr(sys.stdout, "getvalue"):
+            self.fail("need to run test in buffered mode")
+        output = sys.stdout.getvalue().strip()
+        self.assertIn('h', output)
+
+
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(buffer=True)
