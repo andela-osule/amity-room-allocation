@@ -3,16 +3,20 @@ import abc
 
 class Person(object):
     """This represents a person.
-    "   Must be instantiated with full name.
+    "   Must be instantiated with <full name> and <sex>
+    "   Example: p = Person('Jack Frost', 'M')
     """
     name = ''
+    sex = ''
 
-    def __init__(self, name):
+    def __init__(self, name, sex):
         Person.name = name
+        Person.sex = sex
 
     def make_person(self, role):
         self.__class__ = Role.title[role]
         self.name = Person.name
+        self.sex = Person.sex
         return self
 
 
