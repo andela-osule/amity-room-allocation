@@ -1,3 +1,6 @@
+import abc
+
+
 class Person(object):
     """This represents a person.
     "   Must be instantiated with full name.
@@ -29,7 +32,15 @@ class Staff(Person):
 class Manager(Staff):
     """This represents a Manager
     """
-    pass
+    __metaclass__ = abc.ABCMeta
+
+    @abc.abstractmethod
+    def assign_to_office(self, person, office):
+        pass
+
+    @abc.abstractmethod
+    def assign_to_room(self, person, room):
+        pass
 
 
 class Role:
