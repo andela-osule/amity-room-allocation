@@ -41,16 +41,22 @@ class AllocTestCase(unittest.TestCase):
     def test_can_generate_offices(self):
         rooms = alloc.generate_rooms('office')
         self.assertEquals(10, len(rooms))
+        Amity.add_rooms(rooms)
         self.assertIsInstance(rooms[randint(0, 9)], Office)
 
     def test_can_generate_living_spaces(self):
         rooms = alloc.generate_rooms('living space')
         self.assertEquals(10, len(rooms))
+        Amity.add_rooms(rooms)
         self.assertIsInstance(rooms[randint(0, 9)], LivingSpace)
+        self.assertEqual(Amity.room_count, 20)
 
     def test_can_make_allocations(self):
         Manager.allocate()
         self.assertIsNone(alloc.get_list_of_unallocated())
+
+    def test_can_assign_to_office(self):
+        Manager.assign_to_office()
 
 
 class PeopleFileParserTestCase(unittest.TestCase):
