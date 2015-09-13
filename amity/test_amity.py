@@ -1,9 +1,9 @@
 from building import Amity, Office, Room, LivingSpace
 from people import Person, Fellow, Staff, Manager
-from alloc import generate_rooms
 from random import randint
 from tools import PeopleFileParser, AllocationWriter
 
+import alloc
 import unittest
 import sys
 import os.path
@@ -39,18 +39,18 @@ class AmityTestCase(unittest.TestCase):
 class AllocTestCase(unittest.TestCase):
 
     def test_can_generate_offices(self):
-        rooms = generate_rooms('office')
+        rooms = alloc.generate_rooms('office')
         self.assertEquals(10, len(rooms))
         self.assertIsInstance(rooms[randint(0, 9)], Office)
 
     def test_can_generate_living_spaces(self):
-        rooms = generate_rooms('living space')
+        rooms = alloc.generate_rooms('living space')
         self.assertEquals(10, len(rooms))
         self.assertIsInstance(rooms[randint(0, 9)], LivingSpace)
 
     def test_can_make_allocations(self):
         Manager.allocate()
-        self.assertEqual
+        self.assertIsNone(alloc.get_list_of_unallocated())
 
 
 class PeopleFileParserTestCase(unittest.TestCase):
@@ -69,7 +69,7 @@ class AllocationWriterTestCase(unittest.TestCase):
         if not hasattr(sys.stdout, "getvalue"):
             self.fail("need to run test in buffered mode")
         output = sys.stdout.getvalue().strip()
-        self.assertIn('h', output)
+        self.assertIn('Room 1 (OFFICE)', output)
 
     def test_can_write_allocation_to_file(self):
         AllocationWriter.write_allocation(print_file=True)
