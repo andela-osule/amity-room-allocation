@@ -39,9 +39,19 @@ class Amity:
     """This represents the company building.
     "  Rooms can be added to company building.
     """
-    room = []
+    rooms = []
     room_types = {'office': Office,
                   'living space': LivingSpace}
 
-    def add_room(self, room):
-        room.append(room)
+    @staticmethod
+    def add_room(room):
+        if type(room) is not list:
+            Amity.rooms.append(room)
+        else:
+            for room_object in room:
+                Amity.rooms.append(room_object)
+        Amity.update_room_count()
+
+    @staticmethod
+    def update_room_count():
+        Amity.room_count = len(Amity.rooms)
