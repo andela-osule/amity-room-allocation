@@ -9,7 +9,7 @@ class Person(object):
     name = ''
     sex = ''
 
-    def __init__(self, name, sex):
+    def __init__(self, name, sex='M'):
         Person.name = name
         Person.sex = sex
 
@@ -40,10 +40,14 @@ class Manager(Staff):
 
     @abc.abstractmethod
     def assign_to_office(self, person, office):
+        """Assign a person to an office space
+        """
         pass
 
     @abc.abstractmethod
     def assign_to_room(self, person, room):
+        """Assign a person to an living space
+        """
         pass
 
 
