@@ -42,7 +42,7 @@ class Amity:
     """This represents the company building.
     "  Rooms can be added to company building.
     """
-
+    people_collection = []
     rooms = []
     room_types = {'office': Office,
                   'living space': LivingSpace}
@@ -93,3 +93,17 @@ class Amity:
         for index, room in enumerate(Amity.rooms):
             if room.name in room_name:
                 return index
+
+    @staticmethod
+    def add_person(person):
+        """Adds a person to the people collection
+        """
+        Amity.people_collection.append(person)
+
+    @staticmethod
+    def add_persons(*persons):
+        """Add persons to the people collection
+        """
+        persons_list = tools.flatten(list(persons))
+        for person in persons_list:
+            Amity.add_person(person)
