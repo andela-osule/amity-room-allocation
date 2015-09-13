@@ -13,10 +13,15 @@ class Person(object):
         Person.name = name
         Person.sex = sex
 
-    def make_person(self, role):
+    def make_person(self, role, has_exp_interest=False):
+        """Create an instance of either Fellow or Staff object.
+        "  <role> argument must be passed in.
+        """
         self.__class__ = Role.title[role.lower()]
         self.name = Person.name
         self.sex = Person.sex
+        if self.__class__ is Fellow:
+            self.has_expressed_interest = has_exp_interest
         return self
 
 
@@ -24,7 +29,7 @@ class Fellow(Person):
     """This represents a person who is a fellow.
     """
     def can_have_living_space(self):
-        return True
+        return True if self.has_expressed_interest else False
 
     def __repr__(self):
         return "Fellow: {0}".format(self.name)
