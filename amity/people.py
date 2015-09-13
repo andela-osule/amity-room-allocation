@@ -14,7 +14,7 @@ class Person(object):
         Person.sex = sex
 
     def make_person(self, role):
-        self.__class__ = Role.title[role]
+        self.__class__ = Role.title[role.lower()]
         self.name = Person.name
         self.sex = Person.sex
         return self
