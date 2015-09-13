@@ -1,24 +1,38 @@
-class Fellow:
-    def __init__(self, name):
-        self.name = name
-
-
-class Staff:
-    def __init__(self, name):
-        self.name = name
-
-
 class Person(object):
     """This represents a person.
-    "   Must be instantiated with full name of person and role.
-    "   Role could be fellow or staff
+    "   Must be instantiated with full name.
     """
-    __roles = {'fellow': Fellow, 'staff': Staff}
+    name = ''
 
-    def make_person(self, name, role):
-        return Person.__roles[role](name)
+    def __init__(self, name):
+        Person.name = name
 
-    def __init__(self, name, role):
-        self.__class__ = Person.get_role_class(role)
-        self.__init__()
-        self.name = name
+    def make_person(self, role):
+        self.__class__ = Role.title[role]
+        self.name = Person.name
+        return self
+
+
+class Fellow(Person):
+    """This represents a person who is a fellow.
+    """
+    def can_have_living_space(self):
+        return True
+
+
+class Staff(Person):
+    """This represents a person who is a staff.
+    """
+    pass
+
+
+class Manager(Staff):
+    """This represents a Manager
+    """
+    pass
+
+
+class Role:
+    """This manages titles that person can take on
+    """
+    title = {'fellow': Fellow, 'staff': Staff, 'manager': Manager}
