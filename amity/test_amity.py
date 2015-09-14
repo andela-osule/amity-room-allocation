@@ -53,15 +53,14 @@ class AllocTestCase(unittest.TestCase):
         self.assertEqual(Amity.room_count, 20)
 
         PeopleFileParser.line_to_person(file_path)
-        print Amity.room_count
         person_name = 'ANDREW PHILLIPS'
         Manager.assign_to_room('Room 1', person_name)
         Manager.assign_to_room('Room 10', person_name)
         person = Amity.find_person(person_name)
         self.assertEquals(person.office.name, 'Room 1')
         self.assertIn(person, Amity.find_room('Room 1').occupants)
-
-    def test_can_make_allocations(self):
+        # test that manager can make allocations
+        print Amity.room_collection
         Manager.allocate()
         self.assertIsNone(Manager.get_list_of_unallocated())
 
