@@ -66,7 +66,7 @@ def assign_to_room(room_name, person_name):
 def assign_to_living_space(living_space, person):
     """Assign a person to a living space.
     """
-    if person.has_expressed_interest():
+    if person.can_have_living_space():
         if person.is_female():
             if living_space.has_no_occupant()\
                or (living_space.has_female_occupant()
@@ -81,8 +81,13 @@ def assign_to_living_space(living_space, person):
 def allocate():
     while not (Amity.all_rooms_filled() or Amity.all_persons_assigned()):
         Manager.assign_to_living_space(
-                                    Amity.room_collection[randint(0, 20)],
-                                    Amity.people_collection[randint(0, 20)]
+                                    Amity.room_collection[randint(0, 19)],
+                                    Amity.people_collection[
+                                                randint(0,
+                                                        len(
+                                                            Amity.
+                                                            people_collection
+                                                            )-1)]
                                     )
 
 
