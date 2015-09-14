@@ -7,6 +7,7 @@ class Room(object):
     """
     def __init__(self, name, room_type):
         self.__class__ = Amity.room_types.get(room_type)
+        self.occupants = []
         self.__init__(name)
 
     def set_name(self, name):
@@ -14,6 +15,15 @@ class Room(object):
 
     def get_capacity(self):
         return self.get_capacity()
+
+    def filled(self):
+        return True if len(self.occupants) is self.capacity else False
+
+    def add_occupant(self, person):
+        """Adds an occupant to a room.
+        """
+        self.occupants.append(person)
+        person.assign_office(self)
 
 
 class Office(Room):
@@ -27,7 +37,7 @@ class Office(Room):
         self.set_name(name)
 
     def __repr__(self):
-        return "Office: {0}".format(self.name)
+        return "{0} (OFFICE)".format(self.name)
 
 
 class LivingSpace(Room):
@@ -40,8 +50,16 @@ class LivingSpace(Room):
     def __init__(self, name):
         self.set_name(name)
 
+    def has_female_occupant(self):
+        female_occupant = (True for person
+                           in self.occupants
+                           if person.is_female())
+        if len(female_occupant) > 0:
+            return True
+        return False
+
     def __repr__(self):
-        return "Living Space: {0}".format(self.name)
+        return "{0} (LIVING)".format(self.name)
 
 
 class Amity:
@@ -78,10 +96,10 @@ class Amity:
     def remove_room(room_name):
         """Removes a room by name from the building.
         """
-        room_index = Amity.find_room(room_name)
+        room_space = Amity.find_room(room_name)
         try:
-            del Amity.room_collection[room_index]
-        except IndexError:
+            Amity.room_collection.remove(room_space)
+        except ValueError:
             print "Room {0} does not exist".format(room_name)
         Amity.update_room_count()
 
@@ -96,9 +114,9 @@ class Amity:
 
     @staticmethod
     def find_room(room_name):
-        for index, room in enumerate(Amity.room_collection):
-            if room.name in room_name:
-                return index
+        for room in Amity.room_collection:
+            if room.name == room_name:
+                return room
 
     @staticmethod
     def add_person(person):
@@ -113,3 +131,18 @@ class Amity:
         persons_list = tools.flatten(list(persons))
         for person in persons_list:
             Amity.add_person(person)
+
+    @staticmethod
+    def reset_room_count():
+        """Resets room count to zero.
+        """
+        Amity.remove_rooms([room.name for room in Amity.room_collection])
+
+    @staticmethod
+    def find_person(person_name):
+        """Finds a person in the people_collection by <person_name>
+           and returns a person object instance from the collection
+        """
+        person_tuple = (person for person in Amity.people_collection
+                        if person.name == person_name)
+        return person_tuple.next()
