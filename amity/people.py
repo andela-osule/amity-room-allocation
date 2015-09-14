@@ -20,9 +20,26 @@ class Person(object):
         self.__class__ = Role.title[role.lower()]
         self.name = Person.name
         self.sex = Person.sex
+        self.office = None
         if self.__class__ is Fellow:
             self.has_expressed_interest = has_expr_interest
         return self
+
+    def has_office(self):
+        """This checks if a person has been assigned an office
+        """
+        return True if self.office is not None else False
+
+    def assign_office(self, office):
+        """This assigns a person to an office
+            Second argument is an office object
+        """
+        self.office = office
+
+    def is_female(self):
+        """This checks if a person is female.
+        """
+        return True if self.sex is 'F' else False
 
 
 class Fellow(Person):
@@ -30,6 +47,18 @@ class Fellow(Person):
     """
     def can_have_living_space(self):
         return True if self.has_expressed_interest else False
+
+    def has_living_space(self):
+        """This checks if a fellow has living space
+        """
+        return True if self.living_space is not None else False
+
+    def assign_living_space(self, room):
+        """This assign a fellow a living space.
+            Second argument is a room object.
+        """
+        if self.can_have_living_space():
+            self.living_space = room
 
     def __repr__(self):
         return "Fellow: {0}".format(self.name)
