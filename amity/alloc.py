@@ -1,4 +1,4 @@
-from people import Manager, Staff, People
+from people import Manager, Staff
 from building import Room, Amity, LivingSpace, Office
 from random import randint
 
@@ -20,7 +20,6 @@ def assign_to_office(office, person):
     """
     if not office.filled():
         office.add_occupant(person)
-
 
 
 @staticmethod
@@ -80,10 +79,10 @@ def assign_to_living_space(living_space, person):
 
 @staticmethod
 def allocate():
-    while not (Amity.all_rooms_filled() or People.all_assigned()):
+    while not (Amity.all_rooms_filled() or Amity.all_persons_assigned()):
         Manager.assign_to_living_space(
                                     Amity.room_collection[randint(0, 20)],
-                                    Amity.people_collection[randint[0, 20]]
+                                    Amity.people_collection[randint(0, 20)]
                                     )
 
 
