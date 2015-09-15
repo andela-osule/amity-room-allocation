@@ -183,7 +183,7 @@ class Amity:
 
     @staticmethod
     def all_persons_assigned():
-        """Check is all every person has room
+        """Check if every person has room
         """
         for person in Amity.people_collection:
             if not person.has_office():
