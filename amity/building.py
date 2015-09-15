@@ -146,3 +146,21 @@ class Amity:
         person_tuple = (person for person in Amity.people_collection
                         if person.name == person_name)
         return person_tuple.next()
+
+    @staticmethod
+    def all_rooms_filled():
+        available_rooms = [True
+                           for room
+                           in Amity.room_collection
+                           if not room.filled()]
+        if len(available_rooms) > 0:
+            return False
+        return True
+
+    @staticmethod
+    def all_persons_assigned():
+        unassigned_persons = [True
+                              for person in Amity.people_collection
+                              if not person.has_office()]
+        if len(unassigned_persons) > 0:
+            return True
