@@ -1,3 +1,13 @@
+#!/usr/bin/python
+# title          :amity/building.py
+# description    :This package allocates people to rooms in a building.
+# author         :Oluwafemi Sule
+# email          :oluwafemi.sule@andela.com
+# date           :20150915
+# version        :0.0.1
+# python_version :2.7.10
+# ==============================================================================
+
 import tools
 from random import randint
 from exception import OutOfOfficeException, OutOfLivingSpaceException

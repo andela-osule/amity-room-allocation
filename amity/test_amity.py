@@ -1,3 +1,13 @@
+#!/usr/bin/python
+# title          :amity/test_amity.py
+# description    :This package allocates people to rooms in a building.
+# author         :Oluwafemi Sule
+# email          :oluwafemi.sule@andela.com
+# date           :20150915
+# version        :0.0.1
+# python_version :2.7.10
+# ==============================================================================
+
 from building import Amity, Office, Room, LivingSpace
 from people import Person, Fellow, Staff, Manager
 from random import randint
@@ -16,7 +26,7 @@ os.environ['NOSE_COVER_PACKAGE'] = 'amity'
 file_path = 'amity/data_samples/people.txt'
 
 
-class aAmityTestCase(unittest.TestCase):
+class AmityTestCase(unittest.TestCase):
 
     def setUp(self):
         self.r = Room('Anvil', 'office')
