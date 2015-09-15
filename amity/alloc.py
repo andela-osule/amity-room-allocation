@@ -61,7 +61,7 @@ def get_list_of_unallocated_people():
 @staticmethod
 def assign_to_room(person, room_name=None):
     """Assign a person to a room.
-        <person> argument must be passed.
+        <room_name> is optional.
     """
     # find a person by name
     if type(person) is str:
