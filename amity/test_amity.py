@@ -60,16 +60,14 @@ class AllocTestCase(unittest.TestCase):
         # test that file can be parsed
         PeopleFileParser.line_to_person(file_path)
         person_name = 'ANDREW PHILLIPS'
-        Manager.assign_to_room('Room 1', person_name)
-        Manager.assign_to_room('Room 10', person_name)
+        Manager.assign_to_room(person_name, 'Room 1')
+        Manager.assign_to_room(person_name, 'Room 10')
         person = Amity.find_person(person_name)
         self.assertEquals(person.office.name, 'Room 1')
         self.assertIn(person, Amity.find_room('Room 1').occupants)
 
         # test that manager can make allocations
         Manager.allocate()
-        print Amity.room_collection[0].occupants
-        print Amity.room_collection[1].occupants
         self.assertIsNone(Manager.get_list_of_unallocated_people())
 
 
