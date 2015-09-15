@@ -68,7 +68,7 @@ class AllocTestCase(unittest.TestCase):
 
         # test that manager can make allocations
         Manager.allocate()
-        self.assertIsNone(Manager.get_list_of_unallocated_people())
+        self.assertEquals([], Manager.get_list_of_unallocated_people())
 
 
 class PeopleFileParserTestCase(unittest.TestCase):
@@ -90,7 +90,8 @@ class AllocationWriterTestCase(unittest.TestCase):
 
     def test_can_write_allocation_to_file(self):
         AllocationWriter.write_allocation(print_file=True)
-        self.assertTrue(os.path.isfile('amity/output/allocation_table.txt'))
+        self.assertTrue(os.path.isfile(os.getcwd()
+                        + '/amity/output/allocation.txt'))
 
 
 if __name__ == '__main__':
