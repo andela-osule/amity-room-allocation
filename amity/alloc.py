@@ -27,24 +27,28 @@ def assign_to_office(person, room=None):
 def get_list_of_allocations():
     """This gets the list of allocations
     """
-    return [(room.name, room.occupants) for room in Amity.room_collection]
+    return [(room,
+            room.occupants) for room in Amity.room_collection]
 
 
 @staticmethod
 def print_list_of_allocations():
     """This prints the list of allocations
     """
-    for room_name, occupants in Manager.get_list_of_allocations():
-        print room_name
-        Amity.print_members_in_room(room_name)
+    for room, occupants in Manager.get_list_of_allocations():
+        print str(room)
+        Manager.get_members_in_room(room.name, print_stdio=True)
 
 
 @staticmethod
-def print_members_in_room(room_name):
+def get_members_in_room(room_name, print_stdio=False):
     """Given a room, this prints all members in it.
     """
     room = Amity.find_room(room_name)
-    print ', '.join(occupant.name for occupant in room.occupants)
+    occupants = ', '.join(occupant.name for occupant in room.occupants)
+    if print_stdio is True:
+        print occupants
+    return occupants
 
 
 @staticmethod
@@ -55,6 +59,7 @@ def get_list_of_unallocated_people():
             for person in Amity.people_collection
             if not person.has_office()
             or (isinstance(person, Fellow)
+                and person.can_have_living_space()
                 and not person.has_living_space())]
 
 
@@ -115,8 +120,9 @@ Manager.assign_to_office = assign_to_office
 Manager.assign_to_living_space = assign_to_living_space
 Manager.allocate = allocate
 Manager.get_list_of_unallocated_people = get_list_of_unallocated_people
+Manager.get_list_of_allocations = get_list_of_allocations
 Manager.print_list_of_allocations = print_list_of_allocations
-Manager.print_members_in_room = print_members_in_room
+Manager.get_members_in_room = get_members_in_room
 
 if __name__ == '__main__':
     offices = generate_rooms('office')
