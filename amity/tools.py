@@ -1,5 +1,7 @@
 from re import search
-from people import Person
+from people import Person, Manager
+
+import os
 
 
 def flatten(args):
@@ -52,4 +54,13 @@ class PeopleFileParser:
 
 
 class AllocationWriter:
-    pass
+    @staticmethod
+    def write_allocation(print_stdio=False, print_file=False):
+        allocations = Manager.get_list_of_allocations()
+        if print_file is True:
+            with open(os.getcwd()+'/amity/output/allocation.txt', 'w+') as f:
+                for room, occupants in allocations:
+                    f.write(str(room)+'\n')
+                    f.write(Manager.get_members_in_room(room.name)+'\n'*2)
+        if print_stdio is True:
+            Manager.print_list_of_allocations()
