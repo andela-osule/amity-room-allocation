@@ -26,28 +26,33 @@ def assign_to_office(office, person):
 def get_list_of_allocations():
     """This gets the list of allocations
     """
-    pass
+    return [(room.name, room.occupants) for room in Amity.room_collection]
 
 
 @staticmethod
 def print_list_of_allocations():
     """This prints the list of allocations
     """
-    pass
+    for room_name, occupants in Manager.get_list_of_allocations():
+        print room_name
+        Amity.print_members_in_room(room_name)
 
 
 @staticmethod
-def get_list_of_unallocated():
+def get_list_of_unallocated_people():
     """This gets the list of unallocated people
     """
-    pass
+    return [person.name
+            for person in Amity.people_collection
+            if not person.has_office() or not person.has_room()]
 
 
 @staticmethod
 def print_members_in_room(room_name):
     """Given a room, this prints all members in it.
     """
-    pass
+    room = Amity.find_room(room_name)
+    print ', '.join(occupant.name for occupant in room.occupants)
 
 
 @staticmethod
@@ -95,7 +100,7 @@ Manager.assign_to_room = assign_to_room
 Manager.assign_to_office = assign_to_office
 Manager.assign_to_living_space = assign_to_living_space
 Manager.allocate = allocate
-Manager.get_list_of_unallocated = get_list_of_unallocated
+Manager.get_list_of_unallocated_people = get_list_of_unallocated_people
 Manager.print_list_of_allocations = print_list_of_allocations
 Manager.print_members_in_room = print_members_in_room
 
