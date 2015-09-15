@@ -1,6 +1,5 @@
-from people import Manager, Staff
+from people import Manager, Fellow
 from building import Room, Amity, LivingSpace, Office
-from random import randint
 
 
 def generate_rooms(room_type, n=10):
@@ -8,18 +7,20 @@ def generate_rooms(room_type, n=10):
        It should be called with <room_type> and <n:number_of_rooms>
        It returns list of room objects.
     """
-    start = Amity.room_count or Amity.room_count + 1
+    start = (Amity.room_count or Amity.room_count) + 1
     rooms = [Room("Room {0}".format(i),
              room_type) for i in xrange(start, start+n)]
     return rooms
 
 
 @staticmethod
-def assign_to_office(office, person):
+def assign_to_office(person, room=None):
     """Assign person to an office.
     """
-    if not office.filled():
-        office.add_occupant(person)
+    if room is None:
+        room = Amity.get_random_office()
+    if not room.filled():
+        room.add_occupant(person)
 
 
 @staticmethod
@@ -39,15 +40,6 @@ def print_list_of_allocations():
 
 
 @staticmethod
-def get_list_of_unallocated_people():
-    """This gets the list of unallocated people
-    """
-    return [person.name
-            for person in Amity.people_collection
-            if not person.has_office() or not person.has_room()]
-
-
-@staticmethod
 def print_members_in_room(room_name):
     """Given a room, this prints all members in it.
     """
@@ -56,44 +48,66 @@ def print_members_in_room(room_name):
 
 
 @staticmethod
-def assign_to_room(room_name, person_name):
-    """Assign a person to a room.
+def get_list_of_unallocated_people():
+    """This gets the list of unallocated people
     """
-    person = Amity.find_person(person_name)
-    room = Amity.find_room(room_name)
-    if isinstance(room, Office) and not person.has_office():
-        Manager.assign_to_office(room, person)
-    elif isinstance(room, LivingSpace) and not isinstance(person, Staff):
-        Manager.assign_to_living_space(room, person)
+    return [person.name
+            for person in Amity.people_collection
+            if not person.has_office()
+            or (isinstance(person, Fellow)
+                and not person.has_living_space())]
 
 
 @staticmethod
-def assign_to_living_space(living_space, person):
+def assign_to_room(person, room_name=None):
+    """Assign a person to a room.
+        <person> argument must be passed.
+    """
+    # find a person by name
+    if type(person) is str:
+        person = Amity.find_person(person)
+    # find a room by name if specified
+    if type(room_name) is str:
+        room = Amity.find_room(room_name)
+        # is the room an office?
+        if isinstance(room, Office):
+            if not person.has_office():
+                Manager.assign_to_office(person, room)
+        # is the room a living space?
+        elif isinstance(room, LivingSpace):
+            if person.can_have_living_space() and \
+             not person.has_living_space():
+                Manager.assign_to_living_space(person, room)
+    else:
+        if not person.has_office():
+            Manager.assign_to_office(person)
+        if isinstance(person, Fellow) and person.can_have_living_space():
+            if not person.has_living_space():
+                Manager.assign_to_living_space(person)
+
+
+@staticmethod
+def assign_to_living_space(person, room=None):
     """Assign a person to a living space.
     """
-    if person.can_have_living_space():
-        if person.is_female():
-            if living_space.has_no_occupant()\
-               or (living_space.has_female_occupant()
-               and not living_space.filled()):
-                living_space.add_occupant(person)
-        else:
-            if living_space.has_no_occupant() or not living_space.filled():
-                living_space.add_occupant(person)
+    if room is None:
+        room = Amity.get_random_living_space()
+    if person.is_female():
+        room = Amity.find_living_space_with_female_occupant()\
+              or Amity.get_random_living_space()
+        if room.has_no_occupant()\
+           or room.has_female_occupant():
+            room.add_occupant(person)
+    else:
+        if not room.has_female_occupant() \
+         and not person.has_living_space():
+            room.add_occupant(person)
 
 
 @staticmethod
 def allocate():
-    while not (Amity.all_rooms_filled() or Amity.all_persons_assigned()):
-        Manager.assign_to_living_space(
-                                    Amity.room_collection[randint(0, 19)],
-                                    Amity.people_collection[
-                                                randint(0,
-                                                        len(
-                                                            Amity.
-                                                            people_collection
-                                                            )-1)]
-                                    )
+    for person in Amity.people_collection:
+        Manager.assign_to_room(person)
 
 
 Manager.assign_to_room = assign_to_room
