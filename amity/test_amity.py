@@ -3,11 +3,16 @@ from people import Person, Fellow, Staff, Manager
 from random import randint
 from tools import PeopleFileParser, AllocationWriter
 
+import nose
+import sys
+import os
 import alloc
 import unittest
-import sys
 import os.path
 
+sys.path.insert(0, '../')
+os.environ['NOSE_WITH_COVERAGE'] = '1'
+os.environ['NOSE_COVER_PACKAGE'] = 'amity'
 file_path = 'amity/data_samples/people.txt'
 
 
@@ -52,6 +57,7 @@ class AllocTestCase(unittest.TestCase):
         self.assertIsInstance(rooms[randint(0, 9)], LivingSpace)
         self.assertEqual(Amity.room_count, 20)
 
+        # test that file can be parsed
         PeopleFileParser.line_to_person(file_path)
         person_name = 'ANDREW PHILLIPS'
         Manager.assign_to_room('Room 1', person_name)
@@ -59,10 +65,12 @@ class AllocTestCase(unittest.TestCase):
         person = Amity.find_person(person_name)
         self.assertEquals(person.office.name, 'Room 1')
         self.assertIn(person, Amity.find_room('Room 1').occupants)
+
         # test that manager can make allocations
-        print Amity.room_collection
         Manager.allocate()
-        self.assertIsNone(Manager.get_list_of_unallocated())
+        print Amity.room_collection[0].occupants
+        print Amity.room_collection[1].occupants
+        self.assertIsNone(Manager.get_list_of_unallocated_people())
 
 
 class PeopleFileParserTestCase(unittest.TestCase):
@@ -88,4 +96,4 @@ class AllocationWriterTestCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(buffer=True)
+    nose.run()
