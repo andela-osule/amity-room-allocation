@@ -36,7 +36,8 @@ class PeopleFileParser:
             for line in people_file:
                 s = search('^(\w+\s[^\s]+)[\s]{1,}(\w+)[\s]{0,}(\w)?', line)
                 g = s.groups()
-                p = Person(g[0]).make_person(g[1], g[2])
+                name, role, interest = g
+                p = Person(name).make_person(role, interest)
                 persons.append(p)
         if add:
             from building import Amity
