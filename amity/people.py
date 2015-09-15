@@ -22,7 +22,13 @@ class Person(object):
         self.sex = Person.sex
         self.office = None
         if self.__class__ is Fellow:
-            self.has_expressed_interest = has_expr_interest
+            if has_expr_interest == 'Y'\
+               or has_expr_interest is True:
+                self.has_expressed_interest = True
+            else:
+                self.has_expressed_interest = False
+
+            self.living_space = None
         return self
 
     def has_office(self):
@@ -57,8 +63,7 @@ class Fellow(Person):
         """This assign a fellow a living space.
             Second argument is a room object.
         """
-        if self.can_have_living_space():
-            self.living_space = room
+        self.living_space = room
 
     def __repr__(self):
         return "Fellow: {0}".format(self.name)
@@ -67,6 +72,13 @@ class Fellow(Person):
 class Staff(Person):
     """This represents a person who is a staff.
     """
+
+    def can_have_living_space(self):
+        """Check if a staff can have living space.
+           This returns always return False.
+        """
+        return False
+
     def __repr__(self):
         return "Staff: {0}".format(self.name)
 
@@ -75,18 +87,6 @@ class Manager(Staff):
     """This represents a Manager
     """
     __metaclass__ = abc.ABCMeta
-
-    @abc.abstractmethod
-    def assign_to_office(self, person, office):
-        """Assign a person to an office space
-        """
-        pass
-
-    @abc.abstractmethod
-    def assign_to_room(self, person, room):
-        """Assign a person to an living space
-        """
-        pass
 
 
 class Role:
