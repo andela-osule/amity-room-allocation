@@ -30,7 +30,7 @@ class Room(object):
     def get_capacity(self):
         """Get the capacity of a room.
         """
-        return self.get_capacity()
+        return self.capacity
 
     def filled(self):
         """Check if a room is filled with people
@@ -205,8 +205,12 @@ class Amity:
         """Find a living space with a female occupant
         """
         for room in Amity.room_collection:
-            if room.has_female_occupant() and not room.filled():
-                return room
+            if isinstance(room, LivingSpace):
+                if room.has_female_occupant() and not room.filled():
+                    return room
+            elif not isinstance(room, LivingSpace):
+                if room.filled():
+                    return room
         return None
 
     @staticmethod
