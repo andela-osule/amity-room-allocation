@@ -10,6 +10,7 @@
 
 from people import Manager, Fellow
 from building import Room, Amity, LivingSpace, Office
+from exception import OutOfLivingSpaceException, OutOfOfficeException
 
 
 def generate_rooms(room_type, n=10):
@@ -31,6 +32,8 @@ def assign_to_office(person, room=None):
         room = Amity.get_random_office()
     if not room.filled():
         room.add_occupant(person)
+    else:
+        raise OutOfOfficeException
 
 
 @staticmethod
@@ -107,6 +110,9 @@ def assign_to_living_space(person, room=None):
     """
     if room is None:
         room = Amity.get_random_living_space()
+    else:
+        if room.filled():
+            raise OutOfLivingSpaceException
     if person.is_female():
         room = Amity.find_living_space_with_female_occupant()\
               or Amity.get_random_living_space()
