@@ -12,6 +12,7 @@ from building import Amity, Office, Room, LivingSpace
 from people import Person, Fellow, Staff, Manager
 from random import randint
 from tools import PeopleFileParser, AllocationWriter
+from exception import OutOfLivingSpaceException, OutOfOfficeException
 
 import nose
 import sys
@@ -31,7 +32,8 @@ class AmityTestCase(unittest.TestCase):
     def setUp(self):
         self.r = Room('Anvil', 'office')
         self.l = Room('Ruby', 'living space')
-        self.f = Person('Jack').make_person('fellow')
+        self.f = Person('Jane', 'F').make_person('fellow',
+                                                 has_expr_interest=True)
         self.s = Person('Mark').make_person('staff')
 
     def test_can_create_office_or_living_space(self):
@@ -43,6 +45,8 @@ class AmityTestCase(unittest.TestCase):
         Amity.add_room(self.r)
         Amity.add_room(self.l)
         self.assertEquals(Amity.room_count, 2)
+        self.assertEquals(Amity.room_collection[1].get_capacity(), 4)
+        self.assertEquals(Amity.room_collection[1].has_no_occupant(), True)
 
     def test_can_remove_room(self):
         Amity.room_collection
@@ -52,6 +56,12 @@ class AmityTestCase(unittest.TestCase):
     def test_can_create_fellow_or_staff(self):
         self.assertIsInstance(self.f, Fellow)
         self.assertIsInstance(self.s, Staff)
+
+    def test_can_assign_singly_to_room(self):
+        self.assertEquals(Amity.room_collection[1].has_female_occupant(),
+                          False)
+        Manager.assign_to_room(self.f, self.l)
+        self.assertEquals(Amity.room_collection[1].has_female_occupant(), True)
 
 
 class AllocTestCase(unittest.TestCase):
@@ -79,6 +89,23 @@ class AllocTestCase(unittest.TestCase):
         # test that manager can make allocations
         Manager.allocate()
         self.assertEquals([], Manager.get_list_of_unallocated_people())
+
+    def test_can_raise_exception(self):
+        names = ['Damian', 'Rick', 'Charles',
+                 'William', 'Brad', 'Wilson', 'Damian']
+
+        persons = [Person(name).make_person('Fellow', True) for name in names]
+
+        def assign_all(room_name):
+            for person in persons:
+                Manager.assign_to_room(person, room_name)
+
+        #raise Exception(Amity.room_collection)
+        self.assertRaises(OutOfOfficeException,
+                          assign_all, 'Room 1')
+        self.assertRaises(OutOfLivingSpaceException,
+                          assign_all, 'Room 11')
+
 
 
 class PeopleFileParserTestCase(unittest.TestCase):
