@@ -10,6 +10,7 @@
 
 from re import search
 from people import Person, Manager
+from datetime import datetime
 
 import os
 
@@ -68,7 +69,9 @@ class AllocationWriter:
     def write_allocation(print_stdio=False, print_file=False):
         allocations = Manager.get_list_of_allocations()
         if print_file is True:
-            with open(os.getcwd()+'/amity/output/allocation.txt', 'w+') as f:
+            with open(os.getcwd() + '/amity/output/allocation'
+                      + datetime.now().strftime('%d_%m_%Y_%H_%I_%S')
+                      + '.txt', 'w+') as f:
                 for room, occupants in allocations:
                     f.write(str(room)+'\n')
                     f.write(Manager.get_members_in_room(room.name)+'\n'*2)
