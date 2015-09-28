@@ -13,4 +13,44 @@ Person can be fellow or staff.
 Staff cannot be allocated living spaces.
 
 **TESTING THE PROGRAM**
-'''python amity/test_amity.py '''
+
+```
+python amity/test_amity.py
+```
+
+***USING THE PACKAGE**
+
+*Examples:*
+
+1. If you want data output in a file, output is stored in the output directory of the package
+
+```
+from tools import PeopleFileParser, AllocationWriter
+persons = PeopleFileParser.line_to_person('filepath')
+AllocationWriter.write_allocation(print_file=True)
+
+```
+
+2. If you want data output to standard IO
+```
+from tools import PeopleFileParser, AllocationWriter
+persons = PeopleFileParser.line_to_person('filepath')
+AllocationWriter.write_allocation(print_stdio=True)
+```
+
+3. Usually the case is that you want to create persons on the fly
+```
+from people import Person
+from building import Amity
+jane = Person('Jane', 'F').make_person('fellow', has_expr_interest=True)
+# If the has_expr_interest isn't specified, it's set to False by default
+jake = Person('Jake', 'M').make_person('staff')
+Amity.add_persons(jake, jane)
+```
+
+4. There is a Manager to assign persons to rooms
+```
+from people import Manager
+Manager.assign_to_room('Person name', 'Room name')
+Both arguments passed in to the assign_to_room methods must be existent objects in Amity.people_collection
+```
