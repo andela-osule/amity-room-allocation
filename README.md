@@ -18,7 +18,7 @@ Staff cannot be allocated living spaces.
 python amity/test_amity.py
 ```
 
-***USING THE PACKAGE**
+**USING THE PACKAGE**
 
 *Examples:*
 
@@ -52,5 +52,6 @@ Amity.add_persons(jake, jane)
 ```
 from people import Manager
 Manager.assign_to_room('Person name', 'Room name')
-Both arguments passed in to the assign_to_room methods must be existent objects in Amity.people_collection
+# Both arguments passed in to the assign_to_room methods 
+# must be existent objects in Amity.people_collection
 ```
