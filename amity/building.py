@@ -10,7 +10,8 @@
 
 import tools
 from random import randint
-from exception import OutOfOfficeException, OutOfLivingSpaceException
+from exception import OutOfOfficeException, \
+    OutOfLivingSpaceException, RoomTypeDoesNotExist
 
 
 class Room(object):
@@ -18,6 +19,8 @@ class Room(object):
        Instantiate with <name> and <room type>
     """
     def __init__(self, name, room_type):
+        if room_type not in Amity.room_types:
+            raise RoomTypeDoesNotExist
         self.__class__ = Amity.room_types.get(room_type)
         self.occupants = []
         self.__init__(name)
