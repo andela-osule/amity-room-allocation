@@ -16,30 +16,28 @@ class Person(object):
        It must be instantiated with <full name> and <sex>
        Example: p = Person('Jack Frost', 'M')
     """
-    name = ''
-    sex = ''
 
-    def __init__(self, name, sex='M'):
-        Person.name = name
-        Person.sex = sex
+    def __init__(self, name, sex):
+        self.name = name
+        self.sex = sex
 
-    def make_person(self, role, has_expr_interest=False):
+    @staticmethod
+    def make_person(name, role, sex='M', has_expr_interest=False):
         """This creates an instance of either Fellow or Staff object.
            The <role> argument must be passed in.
         """
-        self.__class__ = Role.title[role.lower()]
-        self.name = Person.name
-        self.sex = Person.sex
-        self.office = None
-        if self.__class__ is Fellow:
+        special_person = Role.title[role.lower()]
+        person = special_person(name, sex)
+        person.office = None
+        if isinstance(person, Fellow):
             if has_expr_interest == 'Y'\
                or has_expr_interest is True:
-                self.has_expressed_interest = True
+                person.has_expressed_interest = True
             else:
-                self.has_expressed_interest = False
+                person.has_expressed_interest = False
 
-            self.living_space = None
-        return self
+            person.living_space = None
+        return person
 
     def has_office(self):
         """This checks if a person has been assigned an office

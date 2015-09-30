@@ -33,9 +33,10 @@ class AmityTestCase(unittest.TestCase):
     def setUp(self):
         self.r = Room('Anvil', 'office')
         self.l = Room('Ruby', 'living space')
-        self.f = Person('Jane', 'F').make_person('fellow',
-                                                 has_expr_interest=True)
-        self.s = Person('Mark').make_person('staff')
+        self.f = Person.make_person('Jane', 'fellow',
+                                    sex='F',
+                                    has_expr_interest=True)
+        self.s = Person.make_person('Mark', 'staff')
 
     def test_can_create_office_or_living_space(self):
         self.assertIsInstance(self.r, Office)
@@ -98,18 +99,19 @@ class AllocTestCase(unittest.TestCase):
         names = ['Damian', 'Rick', 'Charles',
                  'William', 'Brad', 'Wilson', 'Damian']
 
-        persons = [Person(name).make_person('Fellow', True) for name in names]
+        persons = [Person.make_person(name, 'Fellow',
+                                      has_expr_interest=True)
+                   for name in names]
 
         def assign_all(room_name):
             for person in persons:
                 Manager.assign_to_room(person, room_name)
 
-        #raise Exception(Amity.room_collection)
+        # raise Exception(Amity.room_collection)
         self.assertRaises(OutOfOfficeException,
                           assign_all, 'Room 1')
         self.assertRaises(OutOfLivingSpaceException,
                           assign_all, 'Room 11')
-
 
 
 class PeopleFileParserTestCase(unittest.TestCase):
