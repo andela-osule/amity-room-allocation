@@ -223,8 +223,8 @@ class Amity:
         offices = [room for room in Amity.room_collection
                    if isinstance(room, Office) and not room.filled()]
         try:
-            o = offices[randint(0, len(offices)-1)]
-            return o
+            office = offices[randint(0, len(offices)-1)]
+            return office
         except:
             raise OutOfOfficeException()
 
@@ -236,7 +236,7 @@ class Amity:
                          if isinstance(room, LivingSpace)
                          and not room.filled()]
         try:
-            l = living_spaces[randint(0, len(living_spaces)-1)]
-            return l
+            living_space = living_spaces[randint(0, len(living_spaces)-1)]
+            return living_space
         except:
             raise OutOfLivingSpaceException()
