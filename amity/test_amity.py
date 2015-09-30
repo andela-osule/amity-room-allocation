@@ -12,7 +12,8 @@ from building import Amity, Office, Room, LivingSpace
 from people import Person, Fellow, Staff, Manager
 from random import randint
 from tools import PeopleFileParser, AllocationWriter
-from exception import OutOfLivingSpaceException, OutOfOfficeException
+from exception import OutOfLivingSpaceException,\
+    OutOfOfficeException, RoomTypeDoesNotExist
 
 import nose
 import sys
@@ -62,6 +63,9 @@ class AmityTestCase(unittest.TestCase):
                           False)
         Manager.assign_to_room(self.f, self.l)
         self.assertEquals(Amity.room_collection[1].has_female_occupant(), True)
+
+    def test_cannot_pass_a_room_type_not_in_dict(self):
+        self.assertRaises(RoomTypeDoesNotExist, Room, 'Yoda', 'common room')
 
 
 class AllocTestCase(unittest.TestCase):
