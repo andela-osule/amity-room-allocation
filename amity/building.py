@@ -108,7 +108,7 @@ class Amity:
     def add_room(room):
         """Add room object to the building.
         """
-        if tools.get_parent(room) is Room:
+        if isinstance(room, Room):
             Amity.room_collection.append(room)
         Amity.update_room_count()
 

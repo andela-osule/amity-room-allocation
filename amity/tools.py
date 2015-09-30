@@ -24,12 +24,6 @@ def flatten(args):
         return [args]
 
 
-def get_parent(arg):
-    """Return parent class of the arg
-    """
-    return arg.__class__.__base__
-
-
 class PeopleFileParser:
     """This represents a class of methods for parsing text.
     """
