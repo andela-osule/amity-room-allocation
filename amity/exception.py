@@ -23,3 +23,11 @@ class OutOfLivingSpaceException(Exception):
 
     def __str__(self):
         return repr(self.message)
+
+
+class RoomTypeDoesNotExist(Exception):
+    def __init__(self):
+        self.message = 'Room type does not exist'
+
+    def __str__(self):
+        return repr(self.message)
