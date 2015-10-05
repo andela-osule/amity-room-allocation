@@ -133,8 +133,11 @@ class AllocationWriterTestCase(unittest.TestCase):
         self.assertIn('Room 1 (OFFICE)', output)
 
     def test_can_write_allocation_to_file(self):
-        file_path = AllocationWriter.write_allocation(print_file=True)
-        self.assertTrue(os.path.isfile(file_path))
+        self.file_path = AllocationWriter.write_allocation(print_file=True)
+        self.assertTrue(os.path.isfile(self.file_path))
+
+    def tearDown(self):
+        os.remove(self.file_path)
 
 
 if __name__ == '__main__':
