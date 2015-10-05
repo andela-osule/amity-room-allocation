@@ -63,11 +63,12 @@ class AllocationWriter:
     def write_allocation(print_stdio=False, print_file=False):
         allocations = Manager.get_list_of_allocations()
         if print_file is True:
-            with open(os.getcwd() + '/amity/output/allocation'
-                      + datetime.now().strftime('%d_%m_%Y_%H_%I_%S')
-                      + '.txt', 'w+') as f:
+            file_path = os.getcwd() + '/amity/output/allocation_'\
+            + datetime.now().strftime('%d_%m_%Y_%H_%I_%S') + '.txt'
+            with open(file_path, 'w+') as f:
                 for room, occupants in allocations:
                     f.write(str(room)+'\n')
                     f.write(Manager.get_members_in_room(room.name)+'\n'*2)
+            return file_path
         if print_stdio is True:
             Manager.print_list_of_allocations()
