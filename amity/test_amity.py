@@ -96,8 +96,9 @@ class AllocTestCase(unittest.TestCase):
         self.assertEquals([], Manager.get_list_of_unallocated_people())
 
     def test_can_raise_exception(self):
-        names = ['Damian', 'Rick', 'Charles',
-                 'William', 'Brad', 'Wilson', 'Damian']
+        names = ['DAMIAN RICK', 'CHARLES WILLIAM',
+                 'BRAD WILSON', 'WILSON DAMIAN',
+                 'JACK BAUER', 'JASON STATHAM']
 
         persons = [Person.make_person(name, 'Fellow',
                                       has_expr_interest=True)
@@ -132,9 +133,8 @@ class AllocationWriterTestCase(unittest.TestCase):
         self.assertIn('Room 1 (OFFICE)', output)
 
     def test_can_write_allocation_to_file(self):
-        AllocationWriter.write_allocation(print_file=True)
-        self.assertTrue(os.path.isfile(os.getcwd()
-                        + '/amity/output/allocation.txt'))
+        file_path = AllocationWriter.write_allocation(print_file=True)
+        self.assertTrue(os.path.isfile(file_path))
 
 
 if __name__ == '__main__':
