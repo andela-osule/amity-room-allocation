@@ -125,6 +125,9 @@ class PeopleFileParserTestCase(unittest.TestCase):
 
 class AllocationWriterTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.file_path = ''
+
     def test_can_write_allocation_to_stdio(self):
         AllocationWriter.write_allocation(print_stdio=True)
         if not hasattr(sys.stdout, "getvalue"):
@@ -135,8 +138,6 @@ class AllocationWriterTestCase(unittest.TestCase):
     def test_can_write_allocation_to_file(self):
         self.file_path = AllocationWriter.write_allocation(print_file=True)
         self.assertTrue(os.path.isfile(self.file_path))
-
-    def tearDown(self):
         os.remove(self.file_path)
 
 
