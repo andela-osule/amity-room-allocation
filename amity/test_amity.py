@@ -51,7 +51,6 @@ class AmityTestCase(unittest.TestCase):
         self.assertEquals(Amity.room_collection[1].has_no_occupant(), True)
 
     def test_can_remove_room(self):
-        Amity.room_collection
         Amity.remove_room(self.r.name)
         self.assertEquals(Amity.room_count, 1)
 
