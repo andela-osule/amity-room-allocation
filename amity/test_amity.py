@@ -21,6 +21,7 @@ import os
 import alloc
 import unittest
 import os.path
+import mock
 
 sys.path.insert(0, '../')
 os.environ['NOSE_WITH_COVERAGE'] = '1'
@@ -134,9 +135,10 @@ class AllocationWriterTestCase(unittest.TestCase):
         output = sys.stdout.getvalue().strip()
         self.assertIn('Room 1 (OFFICE)', output)
 
-    def test_can_write_allocation_to_file(self):
+    @mock.patch('os.path', autospec=True)
+    def test_can_write_allocation_to_file(self, os_path):
         self.file_path = AllocationWriter.write_allocation(print_file=True)
-        self.assertTrue(os.path.isfile(self.file_path))
+        self.assertTrue(os_path.isfile(self.file_path))
         os.remove(self.file_path)
 
 
