@@ -77,7 +77,7 @@ def get_list_of_unallocated_people():
 
 
 @staticmethod
-def assign_to_room(person, room_name=None):
+def assign_to_room(person, room=None):
     """Assign a person to a room.
         <room_name> is optional.
     """
@@ -85,18 +85,18 @@ def assign_to_room(person, room_name=None):
     if type(person) is str:
         person = Amity.find_person(person)
     # find a room by name if specified
-    if type(room_name) is str:
-        room = Amity.find_room(room_name)
+    if type(room) is str:
+        room = Amity.find_room(room)
         # is the room an office?
-        if isinstance(room, Office):
-            if not person.has_office():
-                Manager.assign_to_office(person, room)
+    if isinstance(room, Office):
+        if not person.has_office():
+            Manager.assign_to_office(person, room)
         # is the room a living space?
-        elif isinstance(room, LivingSpace):
-            if person.can_have_living_space() and \
-             not person.has_living_space():
-                Manager.assign_to_living_space(person, room)
-    else:
+    if isinstance(room, LivingSpace):
+        if person.can_have_living_space() and \
+                not person.has_living_space():
+            Manager.assign_to_living_space(person, room)
+    elif room is None:
         if not person.has_office():
             Manager.assign_to_office(person)
         if isinstance(person, Fellow) and person.can_have_living_space():
