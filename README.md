@@ -1,4 +1,4 @@
-OFFICE SPACE ALLOCATION ![Travis Build Badge](https://travis-ci.org/andela-osule/amity-room-allocation.svg?branch=master)
+OFFICE SPACE ALLOCATION ![Travis Build Badge](https://travis-ci.org/andela-osule/amity-room-allocation.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/andela-osule/amity-room-allocation/badge.svg?branch=master&service=github)](https://coveralls.io/github/andela-osule/amity-room-allocation?branch=master)
 =======================
 
 This exercise models a room allocator for Andela's Amity Residence.
